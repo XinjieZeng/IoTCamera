@@ -109,15 +109,8 @@ class _MyCustomFormState extends State<MyLoginForm> {
                   onPressed: () {
                     setState(() {
                           _futureLogin = createLogin(usernameController.text, passwordController.text);
-                        
-                        });
 
-                    return showDialog(context: context, 
-                    builder: (context) {
-                      return AlertDialog(
-                        content: Text(usernameController.text + passwordController.text),
-                     ); 
-                    });
+                        });
                   },
                   
                ),
@@ -130,27 +123,29 @@ class _MyCustomFormState extends State<MyLoginForm> {
                     if (snapshot.hasData) {
                     
                       if (snapshot.data == "invalid") {
-                        return Text("invalid username or password");
+                         return AlertDialog( title: Text("invalid username or password"));
+                         
                       }
-                     
-                     goToMainMenu(context);
-                  
-
-                    } else if (snapshot.hasError) {
+                      
+                      return new Text("successfully logged in");   
+                    } 
+                    
+                    else if (snapshot.hasError) {
                       return Text("${snapshot.error}");
                     }
+
+                    
                     return CircularProgressIndicator();
+                    
+
                   },
                 ),
         ),
       ),
     );
   }
-  } 
 
 
-void goToMainMenu(context) {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => MainMenu()));
 }
   
    
