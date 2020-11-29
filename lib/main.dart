@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hello_app/menu.dart';
-import 'package:hello_app/Login.dart';
+import 'dart:async';
 import 'package:hello_app/postLogin.dart';
-import 'package:http/http.dart' as http;
+import 'package:hello_app/menu.dart';
 
-void main() async {
+
+void main()  {
     runApp(MyApp());
   }
 
@@ -127,9 +127,15 @@ class _MyCustomFormState extends State<MyLoginForm> {
           : FutureBuilder<String>(
                   future: _futureLogin,
                   builder: (context, snapshot) {
-                    
                     if (snapshot.hasData) {
-                      return Text("successful logged in");
+                    
+                      if (snapshot.data == "invalid") {
+                        return Text("invalid username or password");
+                      }
+                     
+                     goToMainMenu(context);
+                  
+
                     } else if (snapshot.hasError) {
                       return Text("${snapshot.error}");
                     }
@@ -137,22 +143,15 @@ class _MyCustomFormState extends State<MyLoginForm> {
                   },
                 ),
         ),
-
-
-
-
-
-
-
-
-
-
-        
       ),
     );
   }
   } 
 
+
+void goToMainMenu(context) {
+  Navigator.push(context, MaterialPageRoute(builder: (context) => MainMenu()));
+}
   
    
 
