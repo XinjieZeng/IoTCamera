@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hello_app/addphoto.dart';
 import 'package:hello_app/opengate.dart';
 
+
+
+
+
+
+
+
+
+
 class MainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
