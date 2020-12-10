@@ -1,11 +1,11 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:hello_app/UploadFileInfo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hello_app/menu.dart';
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 
 
 
@@ -35,7 +35,7 @@ class _MyHomePageState extends State<NewFacePage> {
   final picker = ImagePicker();
 
   Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.getImage(source: ImageSource.gallery, maxHeight: 500, maxWidth: 500);
     
     setState(() {
       if (pickedFile != null) {
@@ -94,6 +94,7 @@ class _MyHomePageState extends State<NewFacePage> {
     FormData formData = FormData.fromMap({
           'filetype': suffix, 
           'filename': name, 
+
           'file': await MultipartFile.fromFile(
            path, 
            filename: name)
@@ -112,11 +113,21 @@ class _MyHomePageState extends State<NewFacePage> {
       );
 
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-        msg: 'upload photo sucessful',
-        gravity: ToastGravity.CENTER,
-        textColor: Colors.grey
-      );
+      if(response.data == "success") {
+        Fluttertoast.showToast(
+          msg: 'upload photo sucessful',
+          gravity: ToastGravity.CENTER,
+          textColor: Colors.grey
+        );
+      }
+      else {
+          Fluttertoast.showToast(
+            msg: 'cannot detect face',
+            gravity: ToastGravity.CENTER,
+            textColor: Colors.grey
+          );
+      }
+    
     }
     
   }
